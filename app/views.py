@@ -120,7 +120,7 @@ def chart():
     )
     
 # App main route + generic routing
-@app.route('/', defaults={'path': 'index.html'})
+@app.route('/', defaults={'path': 'index'})
 @app.route('/<path>')
 def index(path):
 
@@ -128,7 +128,7 @@ def index(path):
         return redirect(url_for('login'))
 
     content = None
-
+    print(path)
     try:
 
         # try to match the pages defined in -> pages/<input file>
@@ -136,7 +136,7 @@ def index(path):
         data = [10,20,10,30,10,50,30,60]
 
         return render_template('layouts/default.html',
-                                content=render_template( 'pages/'+path, data =data) )
+                                content=render_template( 'pages/'+path + ".html", data =data) )
     except:
         
         return render_template('layouts/auth-default.html',

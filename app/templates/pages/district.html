@@ -1,0 +1,130 @@
+
+  <div class="main-content">
+    <!-- Top navbar -->
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <div class="container-fluid">
+        <!-- Brand -->
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/district">THỐNG KÊ SỐ LƯỢNG NHÀ MÔI GIỚI HOẠT ĐỘNG THUỘC KHU VỰC THÀNH PHỐ HÀ NỘI</a>
+        <!-- Form -->
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+          <div class="form-group mb-0">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control" placeholder="Search" type="text">
+            </div>
+          </div>
+        </form>
+        <!-- User -->
+        {% include 'includes/user-dropdown.html' %}
+
+      </div>
+    </nav>
+
+
+    <!-- Header -->
+    {% include 'includes/top-stats.html' %}
+    <div class="container-fluid mt--7 ">
+      <div class="row justify-content-center">
+        <!-- OVERVIEW TOP-->
+        <div class="col-md-8">
+          <div class="card bg-gradient-default shadow">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h2 class="text-white mb-0">Top 5 Khu vực đứng đầu số lượng nhà môi giới </h2>
+                  <h6 class="text-uppercase text-light ls-1 mb-1">Từ tháng 01/2020 - 02/2020 </h6> 
+                </div> 
+                <div class="col">
+                  <ul class="nav nav-pills justify-content-end">
+                    <li >
+                      <a href="#" id ="mdischart" class="nav-link py-2 px-3 active" data-toggle="tab">
+                        <span class="d-none d-md-block">Month</span>
+                        <span class="d-md-none">M</span>
+                      </a>
+                    </li>
+                    <li >
+                      <a href="#" id ="wdischart" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Week</span>
+                        <span class="d-md-none">W</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+          <!-- align-items-center -->
+              <!-- CHART TOP -->
+              <div class="row justify-content-center ">
+                <div id = "myChartDad" class = "container justify-content-center">
+                  <canvas class = "col-md bg-transparent"  id="myChart" ></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- OVERVIEW RECOMMEND-->
+        <div class = "col-md-4" >
+          <div class="card bg-gradient-default shadow">
+            <div class="card-header bg-transparent">
+              <h1 class = "text-uppercase text-light ls-1 mb-1">.RECOMMEND</h1>
+            </div>
+          </div>
+        </div>
+      </div>  
+      <div class = "row p--5" style = "height: 2rem;"></div>
+      
+      <!-- CHART DISTRICT GROUP -->
+      <div class="row justify-content-center ">
+        <div class="col-md-12">
+          <div class = "card bg-gradient-default shadow ">
+            <div class="card-header bg-transparent">
+              <div class= "row align-items-center">
+                <div class = "col-md-5">
+                  <h5 class="text-white mb-0">Số lượng nhà môi giới trong khu vực Hà Nội</h5>
+                </div>
+                <div class = "col-md-7">
+                  <ul class="nav nav-pills justify-content-end">
+                    <li >
+                      <a href="#" id ="district_usefor_chart" class="nav-link py-2 px-3 active" data-toggle="tab">
+                        <span class="d-none d-md-block">Mục đích</span>
+                        <span class="d-md-none">U</span>
+                      </a>
+                    </li>
+                    <li >
+                      <a href="#" id ="district_type_chart" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Nhu cầu</span>
+                        <span class="d-md-none">T</span>
+                      </a>
+                    </li>
+                    <li >
+                      <a href="#" id ="district_price_chart" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Phân khúc</span>
+                        <span class="d-md-none">P</span>
+                      </a>
+                    </li><li >
+                      <a href="#" id ="district_surface_chart" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Diện tích</span>
+                        <span class="d-md-none">S</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row justify-content-center ">
+                <div id = "tcChartDad" class = "container justify-content-center">
+                  <canvas class = "col-md bg-transparent"  id="tcChart" ></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+        {% include 'includes/footer.html' %}
+    </div>
+  </div>
+  <script src="/static/assets/apiJS/district.js"></script>

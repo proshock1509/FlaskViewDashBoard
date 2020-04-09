@@ -1,5 +1,5 @@
 import pandas            as pd
-
+import numpy             as np
 from datetime            import datetime
 from flask               import render_template, request, url_for, redirect, send_from_directory, jsonify
 from app                 import app, lm, db, bc, mydb
@@ -29,14 +29,14 @@ def api_district_usefor():
     df = pd.DataFrame(list(res_db))
     df.district_ten.fillna("Khác", inplace = True)
 
+    pivotdf = pd.pivot_table(df, index = ["district_ten"], columns = ["use_for"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"district_ten" : list(pivotdf.index)}
+    for c in pivotdf["sl"].columns:
+        res[c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Successful!",
-        "data" : {
-            "district_ten": list(df.district_ten),
-            "use_for" : list(df.use_for),
-            "sl": list(df.sl)
-        }
+        "data" : res
     }
     return data
 
@@ -46,14 +46,14 @@ def api_district_type():
     res_db = mydb.district_type_sl_result.find({})
     df = pd.DataFrame(list(res_db))
     df.fillna("Khác", inplace = True)
+    pivotdf = pd.pivot_table(df, index = ["district_ten"], columns = ["type_re_name"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"district_ten" : list(pivotdf.index)}
+    for c in pivotdf["sl"].columns:
+        res[c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Successful!",
-        "data" : {
-            "district_ten" : df.district_ten.tolist(),
-            "type_re_name" : df.type_re_name.tolist(),
-            "sl" : df.sl.tolist()
-        }
+        "data" : res
     }
     return data 
 
@@ -62,14 +62,14 @@ def api_district_price():
     res_db = mydb.district_price_sl_result.find({})
     df = pd.DataFrame(list(res_db))
     df.fillna("Khác", inplace = True)
+    pivotdf = pd.pivot_table(df,index = ["district_ten"], columns = ["price_level"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"district_ten" : list(pivotdf.index)}
+    for c in pivotdf["sl"].columns:
+        res[c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Successful!",
-        "data" : {
-            "district_ten" : df.district_ten.tolist(),
-            "price_level" : df.price_level.tolist(),
-            "sl" : df.sl.tolist()
-        }
+        "data" : res
     }
     return data 
 
@@ -112,6 +112,9 @@ def api_district_day():
         }
         return data 
     df = pd.DataFrame(list(res_db))
+
+
+
     df.fillna("Khác", inplace = True)
     data = {
         "code" : 1000,

@@ -23,18 +23,21 @@ def check_request(request):
         data = {"code" : 1002,
                 "message" : "Parameter is not enough."}
         return data
-
-    fromday = datetime.strptime(content["fromday"], "%Y-%m-%d").strftime('%Y-%m-%d')
-    today = datetime.strptime(content["today"], "%Y-%m-%d").strftime('%Y-%m-%d')
-
     if not (isinstance(content["fromday"], str) and isinstance(content["today"],str) ):
         data = {"code" : 1004,
                 "message" : "Parameter value is not invaild."}
         return data
-    if not ( check_time(fromday) and check_time(today) ):
+    
+    if not ( check_time(content["fromday"]) and check_time(content["today"]) ):
         data = {"code" : 1004,
                 "message" : "Parameter value is not invaild."}
         return data
+    
+    fromday = datetime.strptime(content["fromday"], "%Y-%m-%d").strftime('%Y-%m-%d')
+    today = datetime.strptime(content["today"], "%Y-%m-%d").strftime('%Y-%m-%d')
+
+    
+    
     if fromday > today :
         data = {"code" : 1004,
                 "message" : "Parameter value is not invaild."}

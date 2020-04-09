@@ -28,7 +28,6 @@ def api_usefor_district():
 def api_usefor_type():
     res_db = mydb.usefor_type_sl_result.find({})
     df = pd.DataFrame(list(res_db))
-    print(df)
     df.fillna("Khac", inplace =  True)
     data = {
         "code" : 1000,
@@ -46,7 +45,7 @@ def api_usefor_type():
 def api_usefor_price():
     res_db = mydb.usefor_price_sl_result.find({})
     df = pd.DataFrame(list(res_db))
-    print(df)
+
     df.fillna("Khac", inplace =  True)
     data = {
         "code" : 1000,
@@ -65,7 +64,7 @@ def api_usefor_price():
 def api_usefor_surface():
     res_db = mydb.usefor_surface_sl_result.find({})
     df = pd.DataFrame(list(res_db))
-    print(df)
+
     df.fillna("Khac", inplace =  True)
     data = {
         "code" : 1000,
@@ -85,8 +84,8 @@ def api_usefor_day():
         return check_param.check_request(request)
     
     content = request.json 
-    fromday = content["fromday"]
-    today = content["today"]
+    fromday =  datetime.strptime(content["fromday"], "%Y-%m-%d").strftime('%Y-%m-%d')
+    today = datetime.strptime(content["today"], "%Y-%m-%d").strftime('%Y-%m-%d')
 
     res_db = mydb.usefor_day_sl_result.find({
         "day" : {
@@ -104,7 +103,7 @@ def api_usefor_day():
 
     df = pd.DataFrame(list(res_db))
     df.fillna("Khac", inplace = True)
-    print(df)
+
     data = {
         "code" : 1000,
         "message" : "Successful!",

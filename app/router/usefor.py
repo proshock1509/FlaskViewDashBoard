@@ -1,5 +1,5 @@
 import pandas            as pd
-
+import numpy             as np
 from datetime            import datetime
 from flask               import render_template, request, url_for, redirect, send_from_directory, jsonify
 from app                 import app, lm, db, bc, mydb
@@ -10,6 +10,7 @@ def api_usefor():
     res_db = mydb.usefor_sl_result.find({})
     df = pd.DataFrame(list(res_db))
     df.fillna("Khac", inplace = True)
+
     data = {
         "code" : 1000,
         "message" : "Successful!",
@@ -103,15 +104,15 @@ def api_usefor_day():
 
     df = pd.DataFrame(list(res_db))
     df.fillna("Khac", inplace = True)
-
+    pivotdf = pd.pivot_table(df, index=["day"], columns = ["use_for"], values = ["sl"], aggfunc=np.sum, fill_value = 0)
+    res = {"day" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Successful!",
-        "data" : {
-            "use_for" : list(df.use_for),
-            "day" : list(df.day),
-            "sl" : list(df.sl)
-        }
+        "data" : res
     }
     return data
     

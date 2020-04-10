@@ -1,3 +1,25 @@
+function r() { return Math.floor(Math.random() * 255) }
+function gen_datasets(data){
+    datasets = []
+    for (district in data["sl"]){
+        x = r()
+        y = r()
+        z = r()
+        set = {}
+        set["label"] = district
+        set["data"] = data["sl"][district]
+        set.borderWidth = 1
+        set.backgroundColor = 'rgba(' + x +',' + y + ',' + z + ',0.4)'
+        set.borderColor = 'rgba(' + x +',' + y + ',' + z + ',1)'
+        set.lineTension = 0
+        set.fill = false
+        datasets.push(set)
+    }
+    return datasets
+}
+
+
+
 var monthChart = function(data){
     $('#myChart').remove(); // this is my <canvas> element
     $('#myChartDad').append('<canvas class = "col-md bg-transparent" id="myChart"><canvas>');
@@ -280,7 +302,7 @@ var districtTypeChart = function(dt_data){
         title: {
           display: true,
           position: "top",
-          text: "Biểu đồ thống kê số lượng nhà môi giới theo nhu cầu sử dụng",
+          text: "Biểu đồ thống kê số lượng nhà môi giới theo mục đích sử dụng",
           fontColor	: "rgba(255,255,255,0.7)",
           fontSize	: 20
 
@@ -332,24 +354,198 @@ var districtPriceChart = function(dp_data){
                 backgroundColor:'rgba(153, 102, 255, 0.4)',
                 borderColor: 'rgba(153, 102, 255, 1)',
                 borderWidth: 1,
-                data: dt_data["Tầm trung"]
+                data: dp_data["Tầm trung"]
               },
               {
                 label: "Cao cấp", //RENT
                 backgroundColor: 'rgba(255, 0, 0, 0.4)',
                 borderColor: 'rgba(255, 0, 0,1)',
                 borderWidth: 1,
-                data: dt_data["Cao cấp"],
+                data: dp_data["Cao cấp"],
               },
               {
                 label: "Khác", //RENT
                 backgroundColor: 'rgba(158, 206, 86, 0.4)',
                 borderColor: 'rgba(158, 206, 86,1)',
                 borderWidth: 1,
-                data: dt_data["Khác"],
+                data: dp_data["Khác"],
               }
         ]
     }
+
+    var chartOptions = {
+        responsive: true,
+        legend : {
+            position : "top",
+            labels :{
+                fontSize: 15,
+                fontColor: "rgba(255,255,255,0.7)"
+            }
+        },
+        title:{
+            display: true,
+            position: "top",
+            text: "Biểu đồ thống kê số lượng nhà môi giới theo phân khúc",
+            fontColor	: "rgba(255,255,255,0.7)",
+            fontSize	: 20
+        },
+        scales : {
+            yAxes : [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor	: "rgba(255,255,255,0.7)"
+                  }
+            }],
+            xAxes : [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor	: "rgba(255,255,255,0.7)"
+                  }
+            }]
+        }
+    }
+    $('#tcChart').remove(); // this is my <canvas> element
+    $('#tcChartDad').append('<canvas class = "col-md bg-transparent" id="tcChart"><canvas>');
+    var ctx = document.getElementById("tcChart").getContext("2d");
+    window.myBar = new Chart(ctx, {
+        type: "bar",
+        data: barChartData,
+        options: chartOptions
+    });
+}
+
+
+
+
+
+var districtSurfaceChart = function(ds_data){
+    var barChartData = {
+        labels : ds_data["district_ten"],
+        datasets : [
+            {
+                label : "Dưới 50m",
+                backgroundColor : 'rgba(255, 206, 86, 0.4)',
+                borderColor : 'rgba(255,206,86,1)',
+                borderWidth : 1,
+                data : ds_data["Dưới 50m"]
+            },
+            {
+                label: "Từ 50-200m", // SALE
+                backgroundColor:'rgba(153, 102, 255, 0.4)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1,
+                data: ds_data["Từ 50-200m"]
+              },
+              {
+                label: "Trên 200m", //RENT
+                backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                borderColor: 'rgba(255, 0, 0,1)',
+                borderWidth: 1,
+                data: ds_data["Trên 200m"],
+              },
+              {
+                label: "Khác", //RENT
+                backgroundColor: 'rgba(158, 206, 86, 0.4)',
+                borderColor: 'rgba(158, 206, 86,1)',
+                borderWidth: 1,
+                data: ds_data["Khác"],
+              }
+        ]
+    }
+    var chartOptions = {
+        responsive: true,
+        legend : {
+            position : "top",
+            labels :{
+                fontSize: 15,
+                fontColor: "rgba(255,255,255,0.7)"
+            }
+        },
+        title:{
+            display: true,
+            position: "top",
+            text: "Biểu đồ thống kê số lượng nhà môi giới theo diện tích",
+            fontColor	: "rgba(255,255,255,0.7)",
+            fontSize	: 20
+        },
+        scales : {
+            yAxes : [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor	: "rgba(255,255,255,0.7)"
+                  }
+            }],
+            xAxes : [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor	: "rgba(255,255,255,0.7)"
+                  }
+            }]
+        }
+    }
+    $('#tcChart').remove(); // this is my <canvas> element
+    $('#tcChartDad').append('<canvas class = "col-md bg-transparent" id="tcChart"><canvas>');
+    var ctx = document.getElementById("tcChart").getContext("2d");
+    window.myBar = new Chart(ctx, {
+        type: "bar",
+        data: barChartData,
+        options: chartOptions
+    });
+}
+
+
+
+var districtDayChart = function(dd_data){
+
+    var lineChartData = {
+        labels :dd_data["day"],
+        datasets : gen_datasets(dd_data)
+    }
+
+    var chartOptions = {
+        fill: false,
+        responsive: true,
+        legend : {
+            position : "top",
+            labels :{
+                fontSize: 15,
+                fontColor: "rgba(255,255,255,0.7)"
+            }
+        },
+        title:{
+            display: true,
+            position: "top",
+            text: "Biểu đồ thống kê số lượng nhà môi giới từ " + fromday+ " đến " + today,
+            fontColor	: "rgba(255,255,255,0.7)",
+            fontSize	: 20
+        },
+        scales : {
+            yAxes : [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor	: "rgba(255,255,255,0.7)"
+                  }
+            }],
+            xAxes : [{
+                
+                ticks: {
+                    beginAtZero: true,
+                    fontColor	: "rgba(255,255,255,0.7)",
+                    type : "time",
+                    time: {
+                        unit : "day"
+                    }
+                }
+                
+            }]
+        }
+    }
+    var ctx =document.getElementById('disDayChart').getContext('2d');
+    window.myBar = new Chart(ctx, {
+        type: "line",
+        data: lineChartData,
+        options: chartOptions
+    });
 }
 
 
@@ -370,7 +566,11 @@ var districtPriceChart = function(dp_data){
 
 
 
-var data, wdata, district_usefor_data, district_type_data,district_price_data,district_surface_data ;
+
+
+var data, wdata, district_usefor_data, district_type_data,district_price_data,district_surface_data, district_day_data ;
+var fromday = "2020-01-21"
+var today = "2020-02-01"
 $.ajax('/api/district', {
     type: 'post',
     async : false,
@@ -428,12 +628,40 @@ $.ajax('/api/district_price', {
     type: "post",
     async : false,
     success: function(res){
-        alert(res["data"]["district_ten"])
+       // alert(res["data"]["district_ten"])
         district_price_data = res["data"]
     },
     error: function(){
         alert("Error")
     }
+})
+
+$.ajax('/api/district_surface', {
+    type: "post",
+    async: false,
+    success: function(res){
+        district_surface_data = res["data"]
+    },
+    error: function(){
+        alert("Error")
+    }
+})
+
+
+$.ajax('/api/district_day', {
+    type : "post",
+    async : false,
+    dataType: 'json',
+    contentType : "application/json",
+    data : JSON.stringify({"fromday": fromday, "today": today}),
+    success : function(res){
+        district_day_data = res["data"]
+        //alert(district_day_data["day"])
+    },
+    error : function(){
+        alert("Error!")
+    }
+
 })
 
 
@@ -443,8 +671,7 @@ $.ajax('/api/district_price', {
 
 
 
-
-
+districtDayChart(district_day_data)
 districtUseforChart(district_usefor_data)
 monthChart(data)
 $(document).ready(function(){
@@ -459,5 +686,12 @@ $(document).ready(function(){
   })
   $("#district_type_chart").click(function(){
     districtTypeChart(district_type_data);
-})
+  })
+  $('#district_price_chart').click(function(){
+    districtPriceChart(district_price_data)
+  })
+  $('#district_surface_chart').click(function(){
+    districtSurfaceChart(district_surface_data)
+  })
+
 });

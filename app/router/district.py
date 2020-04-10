@@ -78,14 +78,15 @@ def api_district_surface():
     res_db = mydb.district_surface_sl_result.find({})
     df = pd.DataFrame(list(res_db))
     df.fillna("Khác", inplace = True)
+    pivotdf = pd.pivot_table(df, index = ["district_ten"], columns = ["surface_level"], values=["sl"], aggfunc=np.sum, fill_value = 0)
+    print(pivotdf)
+    res = {"district_ten": list(pivotdf.index)}
+    for c in pivotdf["sl"].columns:
+        res[c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Successful",
-        "data" : {
-            "district_ten" : df.district_ten.tolist(),
-            "surface_level" : df.surface_level.tolist(),
-            "sl" : df.sl.tolist()
-        }
+        "data" : res 
     }
     return data
 
@@ -116,14 +117,15 @@ def api_district_day():
 
 
     df.fillna("Khác", inplace = True)
+    pivotdf = pd.pivot_table(df, index=["day"], columns = ["district_ten"], values = ["sl"], aggfunc=np.sum, fill_value = 0)
+    res = {"day" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Successful!",
-        "data" : {
-            "district_ten" : df.district_ten.tolist(),
-            "day" : df.day.tolist(),
-            "sl" : df.sl.tolist()
-        }
+        "data" : res
     }
     return data
 

@@ -38,8 +38,14 @@
                 </div> 
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
+                    <li>
+                      <a href="#" id ="totalUseforBtn" class="nav-link py-2 px-3 active" data-toggle="tab">
+                        <span class="d-none d-md-block">Tổng</span>
+                        <span class="d-md-none">T</span>
+                      </a>
+                    </li>
                     <li >
-                      <a href="#" id ="monthUseforBtn" class="nav-link py-2 px-3 active" data-toggle="tab">
+                      <a href="#" id ="monthUseforBtn" class="nav-link py-2 px-3 " data-toggle="tab">
                         <span class="d-none d-md-block">Tháng</span>
                         <span class="d-md-none">M</span>
                       </a>
@@ -71,11 +77,58 @@
           </div>
         </div>
       </div>
-
+      <div class = "row p--5" style = "height: 2rem;"></div>
+      <!-- CHART USEFOR GROUP -->
+      <div class="row justify-content">
+        <div class="col-md-12">
+          <div class = "card bg-gradient-default shadow ">
+            <div class="card-header bg-transparent">
+              <div class= "row align-items-center">
+                <div class = "col-md-5">
+                  <h5 class="text-white mb-0">Số lượng nhà môi giới trong khu vực Hà Nội</h5>
+                </div>
+                <div class = "col-md-7">
+                  <ul class="nav nav-pills justify-content-end">
+                    <li >
+                      <a href="#" id ="usefor_district_btn" class="nav-link py-2 px-3 active" data-toggle="tab">
+                        <span class="d-none d-md-block">Khu vực</span>
+                        <span class="d-md-none">KV</span>
+                      </a>
+                    </li>
+                    <li >
+                      <a href="#" id ="usefor_type_btn" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Nhu cầu</span>
+                        <span class="d-md-none">NC</span>
+                      </a>
+                    </li>
+                    <li >
+                      <a href="#" id ="usefor_price_btn" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Phân khúc</span>
+                        <span class="d-md-none">PK</span>
+                      </a>
+                    </li><li >
+                      <a href="#" id ="usefor_surface_btn" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Diện tích</span>
+                        <span class="d-md-none">DT</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- CHART CANVAS HERE -->
+              <div class="row justify-content-center ">
+                <div id = "tcUseforChartDad" class = "container justify-content-center">
+                  <canvas class = "col-md bg-transparent"  id="tcUseforChart" ></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
         {% include 'includes/footer.html' %}
     </div>
-</div>
+  </div>
 
 
 <script src="/static/assets/apiJS/usefor.js"></script>

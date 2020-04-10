@@ -19,25 +19,41 @@ def api_usefor():
             "sl" : list(df.sl)
         }
     }
+    print(data)
     return data
 
 @app.route("/api/usefor_district", methods = ["POST"])
 def api_usefor_district():
-    return redirect(url_for('api_district_usefor'), code=307)
+    res_db = mydb.district_usefor_sl_result.find({})
+    df = pd.DataFrame(list(res_db))
+    df.district_ten.fillna("Khác", inplace = True)
+
+    pivotdf = pd.pivot_table(df, index = ["use_for"], columns = ["district_ten"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"use_for" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
+    data = {
+        "code" : 1000,
+        "message" : "Successful!",
+        "data" : res
+    }
+    return data
 
 @app.route("/api/usefor_type", methods = ["POST"])
 def api_usefor_type():
     res_db = mydb.usefor_type_sl_result.find({})
     df = pd.DataFrame(list(res_db))
     df.fillna("Khac", inplace =  True)
+    pivotdf = pd.pivot_table(df, index = ["use_for"], columns = ["type_re_name"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"use_for" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Message",
-        "data" : {
-            "use_for" : list(df.use_for),
-            "type_re_name" : list(df.type_re_name),
-            "sl" : list(df.sl)
-        } 
+        "data" : res
     }
 
     return data
@@ -48,14 +64,15 @@ def api_usefor_price():
     df = pd.DataFrame(list(res_db))
 
     df.fillna("Khac", inplace =  True)
+    pivotdf = pd.pivot_table(df, index = ["use_for"], columns = ["price_level"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"use_for" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Message",
-        "data" : {
-            "use_for" : list(df.use_for),
-            "price_level" : list(df.price_level),
-            "sl" : list(df.sl)
-        } 
+        "data" : res
     }
 
     return data
@@ -67,14 +84,15 @@ def api_usefor_surface():
     df = pd.DataFrame(list(res_db))
 
     df.fillna("Khac", inplace =  True)
+    pivotdf = pd.pivot_table(df, index = ["use_for"], columns = ["surface_level"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"use_for" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Message",
-        "data" : {
-            "use_for" : list(df.use_for),
-            "surface_level" : list(df.surface_level),
-            "sl" : list(df.sl)
-        } 
+        "data" : res
     }
 
     return data

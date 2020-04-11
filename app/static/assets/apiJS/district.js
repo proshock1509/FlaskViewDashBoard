@@ -508,7 +508,7 @@ var districtDayChart = function(dd_data){
         legend : {
             position : "top",
             labels :{
-                fontSize: 15,
+                fontSize: 12,
                 fontColor: "rgba(255,255,255,0.7)"
             }
         },

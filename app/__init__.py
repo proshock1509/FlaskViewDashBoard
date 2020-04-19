@@ -19,6 +19,7 @@ app = Flask(__name__)
 
 app.config.from_object('app.configuration.Config')
 mydb = pymongo.MongoClient("mongodb://localhost:27017/")["BDS"]
+prfdb = pymongo.MongoClient("mongodb://localhost:27017/")["PROFILE"]
 
 db = SQLAlchemy  (app) # flask-sqlalchemy
 bc = Bcrypt      (app) # flask-bcrypt

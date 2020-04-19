@@ -141,7 +141,7 @@ var typeUseforChart = function(tu_data){
         title:{
             display: true,
             position: "top",
-            text: "Biểu đồ thống kê số lượng nhà môi giới nhóm cụm nhu cầu sử dụng",
+            text: "Biểu đồ thống kê số lượng nhà môi giới nhóm cụm mục đích sử dụng",
             fontColor	: "rgba(255,255,255,0.7)",
             fontSize	: 20
         },
@@ -285,7 +285,7 @@ var typeDayChart = function(tday_data){
     var chartOptions = {
         responsive: true,
         legend : {
-            position : "top",
+            position : "left",
             labels :{
                 fontSize: 15,
                 fontColor: "rgba(255,255,255,0.7)"

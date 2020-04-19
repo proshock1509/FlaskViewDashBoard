@@ -13,7 +13,7 @@ def api_day():
     content = request.json
     fromday =  datetime.strptime(content["fromday"], "%Y-%m-%d").strftime('%Y-%m-%d')
     today = datetime.strptime(content["today"], "%Y-%m-%d").strftime('%Y-%m-%d')
-    res_db = mydb.district_day_sl_result.find({
+    res_db = mydb.day_sl_result.find({
         "day":{
             "$gte" : fromday,
             "$lte" : today

@@ -20,33 +20,19 @@ function gen_datasets(data){
 
 
 
-var monthChart = function(data){
+var totalChart = function(data){
     $('#myChart').remove(); // this is my <canvas> element
     $('#myChartDad').append('<canvas class = "col-md bg-transparent" id="myChart"><canvas>');
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-          labels: data["district_ten"].slice(0,6),
+          labels: data["district_ten"].slice(1,-1),
           datasets: [{
               label: 'Số lượng Môi giới',
-              data: data["sl"].slice(0,6),
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.4)',
-                  'rgba(54, 162, 235, 0.4)',
-                  'rgba(255, 206, 86, 0.4)',
-                  'rgba(75, 192, 192, 0.4)',
-                  'rgba(153, 102, 255, 0.4)',
-                  'rgba(255, 159, 64, 0.4)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-              ],
+              data: data["sl"].slice(1,-1),
+              backgroundColor: 'rgba(153, 102, 255, 0.4)',
+              borderColor: 'rgba(153, 102, 255, 1)',
               borderWidth: 1
           }]
       },
@@ -568,7 +554,7 @@ var districtDayChart = function(dd_data){
 
 
 
-var data, wdata, district_usefor_data, district_type_data,district_price_data,district_surface_data, district_day_data ;
+var total_data, wdata, district_usefor_data, district_type_data,district_price_data,district_surface_data, district_day_data ;
 var fromday = "2020-01-21"
 var today = "2020-02-01"
 $.ajax('/api/district', {
@@ -576,7 +562,7 @@ $.ajax('/api/district', {
     async : false,
     contentType: "application/json",
     success : function(res) {
-    data = res["data"]
+    total_data = res["data"]
       //alert(data)        
     },
     error: function() {
@@ -673,10 +659,10 @@ $.ajax('/api/district_day', {
 
 districtDayChart(district_day_data)
 districtUseforChart(district_usefor_data)
-monthChart(data)
+totalChart(total_data)
 $(document).ready(function(){
-  $("#mdischart").click(function(){
-  	monthChart(data);
+  $("#tdischart").click(function(){
+  	totalChart(total_data);
   })
   $("#wdischart").click(function(){
   	weekChart(wdata);

@@ -1,5 +1,5 @@
 import pandas            as pd
-
+import numpy             as np
 from datetime            import datetime
 from flask               import render_template, request, url_for, redirect, send_from_directory, jsonify
 from app                 import app, lm, db, bc, mydb
@@ -15,7 +15,7 @@ def api_price():
         "code" : 1000,
         "message" : "Successful!",
         "data" : {
-            "use_for" : list(df.price_level),
+            "price_level" : list(df.price_level),
             "sl" : list(df.sl)
         }
     }
@@ -24,18 +24,54 @@ def api_price():
 
 @app.route("/api/price_district", methods = ["POST"])
 def api_price_district():
-    return redirect(url_for("api_district_price"), code = 307)
-
+    res_db = mydb.district_price_sl_result.find({})
+    df = pd.DataFrame(list(res_db))
+    df.fillna("Khác", inplace = True)
+    pivotdf = pd.pivot_table(df, index = ["price_level"], columns = ["district_ten"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"price_level" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
+    data = {
+        "code" : 1000,
+        "message" : "Successful!",
+        "data" : res
+    }
+    return data 
 
 @app.route("/api/price_usefor", methods = ["POST"])
 def api_price_usefor():
-    return redirect(url_for("api_usefor_price"), code = 307)
-
+    res_db = mydb.usefor_price_sl_result.find({})
+    df = pd.DataFrame(list(res_db))
+    df.fillna("Khác", inplace = True)
+    pivotdf = pd.pivot_table(df, index = ["price_level"], columns = ["use_for"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"price_level" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
+    data = {
+        "code" : 1000,
+        "message" : "Successful!",
+        "data" : res
+    }
+    return data 
 
 @app.route("/api/price_type", methods = ["POST"])
 def api_price_type():
-    return redirect(url_for("api_type_price"), code  = 307)
-
+    res_db = mydb.type_price_sl_result.find({})
+    df = pd.DataFrame(list(res_db))
+    df.fillna("Khác", inplace = True)
+    pivotdf = pd.pivot_table(df, index = ["price_level"], columns = ["type_re_name"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"price_level" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
+    data = {
+        "code" : 1000,
+        "message" : "Successful!",
+        "data" : res
+    }
+    return data 
 
 @app.route("/api/price_surface", methods = ["POST"])
 def api_price_surface():
@@ -43,17 +79,18 @@ def api_price_surface():
     df = pd.DataFrame(list(res_db))
 
     df.fillna("Khac", inplace =  True)
+    pivotdf = pd.pivot_table(df, index = ["price_level"], columns = ["surface_level"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"price_level" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
-        "message" : "Message",
-        "data" : {
-            "price_level" : list(df.price_level),
-            "surface_level" : list(df.surface_level),
-            "sl" : list(df.sl)
-        } 
+        "message" : "Successful!",
+        "data" : res
     }
+    return data 
 
-    return data
 @app.route("/api/price_day", methods = ["POST"])
 def api_price_day():
     if check_param.check_request(request) != 0:
@@ -80,13 +117,14 @@ def api_price_day():
     df = pd.DataFrame(list(res_db))
     df.fillna("Khac", inplace = True)
 
+    pivotdf = pd.pivot_table(df, index = ["day"], columns = ["price_level"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"day" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Successful!",
-        "data" : {
-            "price_level" : list(df.price_level),
-            "day" : list(df.day),
-            "sl" : list(df.sl)
-        }
+        "data" : res
     }
     return data

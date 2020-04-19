@@ -1,5 +1,5 @@
 import pandas            as pd
-
+import numpy             as np
 from datetime            import datetime
 from flask               import render_template, request, url_for, redirect, send_from_directory, jsonify
 from app                 import app, lm, db, bc, mydb
@@ -23,22 +23,74 @@ def api_surface():
 
 @app.route("/api/surface_district", methods = ["POST"])
 def api_surface_district():
-    return redirect(url_for("api_district_surface"), code = 307)
-
+    res_db = mydb.district_surface_sl_result.find({})
+    df = pd.DataFrame(list(res_db))
+    df.fillna("Khác", inplace = True)
+    pivotdf = pd.pivot_table(df, index = ["surface_level"], columns = ["district_ten"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"surface_level" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
+    data = {
+        "code" : 1000,
+        "message" : "Successful!",
+        "data" : res
+    }
+    return data 
 
 @app.route("/api/surface_usefor", methods = ["POST"])
 def api_surface_usefor():
-    return redirect(url_for("api_usefor_surface"), code = 307)
+    res_db = mydb.usefor_surface_sl_result.find({})
+    df = pd.DataFrame(list(res_db))
+    df.fillna("Khac", inplace =  True)
+    pivotdf = pd.pivot_table(df, index = ["surface_level"], columns = ["use_for"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"surface_level" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
+    data = {
+        "code" : 1000,
+        "message" : "Successful!",
+        "data" : res
+    }
+
+    return data
 
 
 @app.route("/api/surface_type", methods = ["POST"])
 def api_surface_type():
-    return redirect(url_for("api_type_surface"), code = 307)
+    res_db = mydb.type_surface_sl_result.find({})
+    df = pd.DataFrame(list(res_db))
+    df.fillna("Khac", inplace =  True)
+    pivotdf = pd.pivot_table(df, index = ["surface_level"], columns = ["type_re_name"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"surface_level" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
+    data = {
+        "code" : 1000,
+        "message" : "Successful!",
+        "data" : res
+    }
 
+    return data
 
 @app.route("/api/surface_price", methods = ["POST"])
 def api_surface_price():
-    return redirect(url_for("api_price_surface"), code = 307)
+    res_db = mydb.price_surface_sl_result.find({})
+    df = pd.DataFrame(list(res_db))
+    df.fillna("Khac", inplace = True)
+    pivotdf = pd.pivot_table(df, index = ["surface_level"], columns = ["price_level"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"surface_level" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
+    data = {
+        "code" : 1000,
+        "message" : "Successful!",
+        "data" : res
+    }
+    return data
 
     
 @app.route("/api/surface_day", methods = ["POST"])
@@ -66,14 +118,14 @@ def api_surface_day():
 
     df = pd.DataFrame(list(res_db))
     df.fillna("Khac", inplace = True)
-
+    pivotdf = pd.pivot_table(df, index = ["day"], columns = ["surface_level"], values = ["sl"],aggfunc=np.sum, fill_value=0)
+    res = {"day" : list(pivotdf.index)}
+    res["sl"] = {}
+    for c in pivotdf["sl"].columns:
+        res["sl"][c] = list(pivotdf["sl"][c])
     data = {
         "code" : 1000,
         "message" : "Successful!",
-        "data" : {
-            "surface_level" : list(df.surface_level),
-            "day" : list(df.day),
-            "sl" : list(df.sl)
-        }
+        "data" : res
     }
     return data

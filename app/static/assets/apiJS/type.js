@@ -329,18 +329,26 @@ var typeDayChart = function(tday_data){
 
 
 var total_data
+var len
 $.ajax("/api/type", {
     type : "post",
     async : false,
     success : function(res){
         total_data = res["data"]
+        len = total_data["sl"].length
     },
     error : function(){
         alert("Error")
     }
 })
 
-
+for(var i = 0; i <len ; i++){
+    $("#list").append('<li class="col-lg col-sm-6" style = "float:left; border: 1px solid #f2f2f2">\
+    <a class="nav-link text-darker" href="/type/type_re_name='+ total_data["type_re_name"][i]+ '?">\
+    <p style="text-align:center;">'+ total_data["sl"][i] + '+ Agencies chuyên</p><p style="text-align:center;">' + total_data["type_re_name"][i] +'</p>\
+    </a></li>')
+    
+  }
 
 
 var type_district_data

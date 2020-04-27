@@ -369,17 +369,26 @@ var priceDayChart = function(pday_data){
 
 
 var total_data
+var len
 $.ajax("/api/price", {
     type : "post",
     async : false,
     success : function(res){
         total_data = res["data"]
+        len = total_data["sl"].length
         //alert(total_data["price_level"])
     },
     error : function(){
         alert("Error")
     }
 })
+for(var i = 0; i <len ; i++){
+    $("#list").append('<li class="col-lg-3 col-sm-6" style = "float:left; border: 1px solid #f2f2f2">\
+    <a class="nav-link text-darker" href="/price/price_level='+ total_data["price_level"][i]+ '?">\
+    <p style="text-align:center;">'+ total_data["sl"][i] + '+ Agencies chuyên</p><p style="text-align:center;">Phân khúc ' + total_data["price_level"][i] +'</p>\
+    </a></li>')
+    
+  }
 
 
 var price_district_data

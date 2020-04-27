@@ -43,3 +43,101 @@ def check_request(request):
                 "message" : "Parameter value is not invaild."}
         return data
     return 0
+
+
+def check_district_request(request):
+    if not isinstance(request.json, dict):
+        data = {"code": 1003,
+                 "message": "Parameter type is invaild (string, byte,xml..) must be json"}
+        return data 
+
+    content = request.json # type dict
+    if ("district_ten" not in content.keys()) or ("count" not in content.keys()) :
+        data = {"code" : 1003,
+                "message" : "Parameter is not invaild."}
+        return data 
+
+    if not (isinstance(content["district_ten"], str) and isinstance(content["count"], int)):
+        data = {"code" : 1004,
+                "message" : "Parameter value is not invaild."}
+        return data
+
+    return 0
+
+
+def check_type_request(request):
+    if not isinstance(request.json, dict):
+        data = {"code": 1003,
+                 "message": "Parameter type is invaild (string, byte,xml..) must be json"}
+        return data 
+
+    content = request.json # type dict
+    if ("type_re_name" not in content.keys()) or ("count" not in content.keys()) :
+        data = {"code" : 1003,
+                "message" : "Parameter is not invaild."}
+        return data 
+
+    if not (isinstance(content["type_re_name"], str) and isinstance(content["count"], int)):
+        data = {"code" : 1004,
+                "message" : "Parameter value is not invaild."}
+        return data
+
+    return 0
+
+def check_usefor_request(request):
+    if not isinstance(request.json, dict):
+        data = {"code": 1003,
+                 "message": "Parameter type is invaild (string, byte,xml..) must be json"}
+        return data 
+
+    content = request.json # type dict
+    if ("use_for" not in content.keys()) or ("count" not in content.keys()) :
+        data = {"code" : 1003,
+                "message" : "Parameter is not invaild."}
+        return data 
+
+    if not (isinstance(content["use_for"], str) and isinstance(content["count"], int)):
+        data = {"code" : 1004,
+                "message" : "Parameter value is not invaild."}
+        return data
+
+    return 0
+
+def check_price_request(request):
+    if not isinstance(request.json, dict):
+        data = {"code": 1003,
+                 "message": "Parameter type is invaild (string, byte,xml..) must be json"}
+        return data 
+
+    content = request.json # type dict
+    if ("price_level" not in content.keys()) or ("count" not in content.keys()) :
+        data = {"code" : 1003,
+                "message" : "Parameter is not invaild."}
+        return data 
+
+    if not (isinstance(content["price_level"], str) and isinstance(content["count"], int)):
+        data = {"code" : 1004,
+                "message" : "Parameter value is not invaild."}
+        return data
+
+    return 0
+
+
+def check_surface_request(request):
+    if not isinstance(request.json, dict):
+        data = {"code": 1003,
+                 "message": "Parameter type is invaild (string, byte,xml..) must be json"}
+        return data 
+
+    content = request.json # type dict
+    if ("surface_level" not in content.keys()) or ("count" not in content.keys()) :
+        data = {"code" : 1003,
+                "message" : "Parameter is not invaild."}
+        return data 
+
+    if not (isinstance(content["surface_level"], str) and isinstance(content["count"], int)):
+        data = {"code" : 1004,
+                "message" : "Parameter value is not invaild."}
+        return data
+
+    return 0

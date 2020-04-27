@@ -335,18 +335,27 @@ var useforDayChart = function(uday_data){
 
 
 //CALL API
+var len
 var total_usefor_data
 $.ajax('/api/usefor', {
     type : "post",
     async : false,
     success: function(res){
         total_usefor_data = res["data"]
+        len = total_usefor_data["sl"].length
         //alert(total_usefor_data["sl"])
     },
     error: function(){
         alert("Error")
     }
 })
+for(var i = 0; i <len ; i++){
+    $("#list").append('<li class="col-6 col-sm" style = "float:left; border: 1px solid #f2f2f2">\
+    <a class="nav-link text-darker" href="/usefor/use_for='+ total_usefor_data["use_for"][i]+ '?">\
+    <p style="text-align:center;">'+ total_usefor_data["sl"][i] + '+ Agencies chuyên</p><p style="text-align:center;">' + total_usefor_data["use_for"][i] +'</p>\
+    </a></li>')
+    
+  }
 
 
 var usefor_district_data

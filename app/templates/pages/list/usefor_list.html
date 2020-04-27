@@ -1,0 +1,93 @@
+  <!-- Main content -->
+  <div class="main-content">
+
+    <!-- Page content -->
+    <div class="container-fluid mt--7" id ="all_agency_items">
+        <div class="row mb-3 " >
+            <div class="container-fluid" >
+                <div class = "row justify-content-between">
+                    <div class="col-10">
+                    <h2 class = " text-gray-dark ls-1 mb-1">Thống kê lượng nhà môi giới theo nhu cầu sử dụng</h2>
+                    <div class="bg-gray-dark"  style="height: 0.5rem;width:100%;border-radius: 12px;"></div>
+                    </div>
+                    <div class="col-1.5">
+                        <a class="text-darker text-underline" href="/usefor">Chi tiết</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <!-- OVERVIEW -->
+            <div class="col-lg-9" style = "box-shadow: 5px 10px 18px #888888;">
+              <div class="card  bg-transparent shadow">
+                <div class="card-header bg-transparent">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <ul class="nav nav-pills justify-content-end">
+                        <li class="mr-2 wow slideInLeft"  data-wow-duration="0.25">
+                          <a href="#" id ="totalBtn" class="nav-link py-2 px-3 active" data-toggle="tab">
+                            <span class="d-none d-lg-block">Tổng</span>
+                            <span class="d-lg-none">T</span>
+                          </a>
+                        </li>
+                        <li class="mr-2 wow slideInLeft" data-wow-duration="3.25">
+                          <a href="#" id ="monthBtn" class="nav-link py-2 px-3 " data-toggle="tab">
+                            <span class="d-none d-lg-block">Tháng</span>
+                            <span class="d-lg-none">M</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+    
+                  <div class="row justify-content-center">
+                    <div id="ovDadChart" class="container justify-content-center">
+                      <canvas id="ovChart" class="col-md bg-transparent"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-lg-3" style= "box-shadow: 5px 10px 18px #888888;">
+              <div class="card bg-gradient-default shadow">
+                <div class="card-header bg-transparent">
+                  <h1 class = "text-uppercase text-light ls-1 mb-1">.RECOMMEND</h1>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row mb-3 mt-3" >
+            <div class="container-fluid" >
+                <div class = "row">
+                    <div class="col-10">
+                    <h2 class = "text-gray-dark ls-1 mb-1">Nhà môi giới HOT theo mục đích</h2>
+                    <div class="bg-gray-dark"  style="height: 0.5rem;width:100%;border-radius: 12px;"></div>
+                    </div>
+                </div>
+
+                <div class = "row " id ="list">
+                    
+                </div>
+                
+            </div>
+        </div>
+
+
+
+
+
+
+
+      {% include 'includes/footer.html' %}
+
+    </div>
+  </div>
+
+
+  <script src="/static/assets/apiJS/list/usefor_list.js"></script>

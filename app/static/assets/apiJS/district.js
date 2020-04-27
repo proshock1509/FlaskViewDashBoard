@@ -18,6 +18,32 @@ function gen_datasets(data){
     return datasets
 }
 
+function removeAccents(str) {
+  var AccentsMap = [
+    "aàảãáạăằẳẵắặâầẩẫấậ",
+    "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+    "dđ", "DĐ",
+    "eèẻẽéẹêềểễếệ",
+    "EÈẺẼÉẸÊỀỂỄẾỆ",
+    "iìỉĩíị",
+    "IÌỈĨÍỊ",
+    "oòỏõóọôồổỗốộơờởỡớợ",
+    "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+    "uùủũúụưừửữứự",
+    "UÙỦŨÚỤƯỪỬỮỨỰ",
+    "yỳỷỹýỵ",
+    "YỲỶỸÝỴ"    
+  ];
+  for (var i=0; i<AccentsMap.length; i++) {
+    var re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
+    var char = AccentsMap[i][0];
+    str = str.replace(re, char);
+  }
+  return str.replace(/ /g,'');
+}
+
+
+
 
 
 var totalChart = function(data){
@@ -557,18 +583,30 @@ var districtDayChart = function(dd_data){
 var total_data, wdata, district_usefor_data, district_type_data,district_price_data,district_surface_data, district_day_data ;
 var fromday = "2020-01-21"
 var today = "2020-02-01"
+var len 
 $.ajax('/api/district', {
     type: 'post',
     async : false,
     contentType: "application/json",
     success : function(res) {
     total_data = res["data"]
-      //alert(data)        
+    len = total_data["district_ten"].length 
+    //alert(len)   
     },
     error: function() {
         alert("Error");
     }
 });
+
+for(var i = 1; i <len ; i++){
+  $("#list").append('<li class="col-lg-3 col-sm-6" style = "float:left; border: 1px solid #f2f2f2">\
+  <a class="nav-link text-darker" href="/district/district_ten='+ total_data["district_ten"][i]+ '?">\
+  <p style="text-align:center;">'+ total_data["sl"][i] + '+ Agencies tại</p><p style="text-align:center;">' + total_data["district_ten"][i] +'</p>\
+  </a></li>')
+  
+}
+
+
 
 contentData = JSON.stringify({"fromday" : "2020-01-23", "today" : "2020-01-23"})
 $.ajax('/api/district_day', {

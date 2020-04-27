@@ -57,4 +57,28 @@ def get_agency_items(common, n):
     #     agency_items.append(item)
 
     # return agency_items
-    
+
+def get_kind_query_agency_items(kind, query, n):
+    cursor = MongoClient("localhost",27017)["PROFILE"]
+    if kind == "district":
+        data = cursor.district_thumb_profile.find(query, {"_id":0}).sort("count",-1).limit(n)
+    if kind == "usefor":
+        data = cursor.usefor_thumb_profile.find(query, {"_id":0}).sort("count",-1).limit(n)
+    if kind == "type":
+        data = cursor.type_thumb_profile.find(query, {"_id":0}).sort("count",-1).limit(n)
+    if kind == "price":
+        data = cursor.price_thumb_profile.find(query, {"_id":0}).sort("count",-1).limit(n)
+    if kind == "surface":
+        data = cursor.surface_thumb_profile.find(query, {"_id":0}).sort("count",-1).limit(n)
+    return list(data)
+
+
+def get_category_items(collection, query, dimention, count):
+    cursor = MongoClient("localhost",27017)["PROFILE"]
+    data = cursor[collection].find(query,{"_id" : 0}).sort([(dimention+ ".0",-1), ("count",-1)]).collation({"locale": "en_US", "numericOrdering": True}).limit(count)
+    return list(data)
+
+def get_collection_query_agency_items_1(collection, query, n):
+    cursor = MongoClient("localhost",27017)["PROFILE"]
+    data = cursor[collection].find(query, {"_id":0}).sort("count",-1).limit(n)
+    return list(data)

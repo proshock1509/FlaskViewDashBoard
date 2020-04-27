@@ -342,18 +342,26 @@ var surfaceDayChart = function(sday_data){
 
 
 var total_data
+var len
 $.ajax("/api/surface", {
     type : "post",
     async : false,
     success : function(res){
         total_data = res["data"]
+        len = total_data["sl"].length
         //alert(res["message"])
     },
     error : function(){
         alert("Error")
     }
 })
-
+for(var i = 0; i <len ; i++){
+    $("#list").append('<li class="col-lg col-sm-6" style = "float:left; border: 1px solid #f2f2f2">\
+    <a class="nav-link text-darker" href="/surface/surface_level='+ total_data["surface_level"][i]+ '?">\
+    <p style="text-align:center;">'+ total_data["sl"][i] + '+ Agencies với</p><p style="text-align:center;">BĐS Diện tích ' + total_data["surface_level"][i] +'</p>\
+    </a></li>')
+    
+  }
 
 var surface_district_data
 $.ajax("/api/surface_district", {

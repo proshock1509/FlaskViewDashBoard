@@ -3,23 +3,36 @@
 
   <head>
 
-    <title>Argon Dashboard - Coded in Flask</title>
+    <title>BĐS A&A Agency và Analytic </title>
     <meta name="description" content="Open-Source Admin Dashboard coded in Flask Microfremwork.">
 
     {% include 'includes/header.html' %}
+    <style>
+      .dropdown:hover>.dropdown-menu {
+      display: block;
 
+    }
+
+    body{
+      background-size: cover;
+      font-family: "San Francisco";
+      background-image: url('/static/assets/img/theme/background-img.jpg');
+      background-repeat : no-repeat;
+    }
+    </style>
   </head>
 
-<body class="bg-default">
+<body>
 
   <div class="main-content">
+    <div class="container-fluid" style = "background-image: url('/static/assets/img/theme/banner.png');background-repeat: no-repeat; background-size: contain;">
 
     {% include 'includes/auth-navigation.html' %}
 
     {% include 'includes/auth-header.html' %}
 
     {{ content | safe }}
-
+  </div>
   </div>
   
   {% include 'includes/auth-footer.html' %}
